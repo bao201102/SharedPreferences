@@ -2,6 +2,7 @@ package bao201102.gmail.com.hellosharedprefs;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     Integer mCount;
     Integer mCurrentColor;
     SharedPreferences mPreferences;
+    Boolean save;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -39,26 +41,30 @@ public class MainActivity extends AppCompatActivity {
         assignId(btn_green, R.id.btn_green);
         assignId(btn_count, R.id.btn_count);
         btn_setting = findViewById(R.id.btn_setting);
+        textView.setTextColor(getColor(R.color.white));
 
+        mPreferences = getSharedPreferences("share", MODE_PRIVATE);
+        if (savedInstanceState == null){
+            int num = mPreferences.getInt("count", 0);
+            int col = mPreferences.getInt("color", 0);
 
-        mPreferences = getSharedPreferences("MySharePref", MODE_PRIVATE);
-
-        int s1 = mPreferences.getInt("count", 0);
-        int a = mPreferences.getInt("color", 0);
-
-        // Setting the fetched data in the EditTexts
-        textView.setText(String.valueOf(s1));
-        textView.setBackgroundColor(a);
-
+            textView.setText(String.valueOf(num));
+            textView.setBackgroundColor(col);
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        SharedPreferences.Editor myEdit = mPreferences.edit();
-        myEdit.putInt("count", mCount);
-        myEdit.putInt("color",mCurrentColor);
-        myEdit.apply();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        save = sharedPreferences.getBoolean("switch",false);
+        if (save == true){
+            SharedPreferences.Editor myEdit = mPreferences.edit();
+            myEdit.putInt("count", mCount);
+            myEdit.putInt("color",mCurrentColor);
+            myEdit.clear();
+            myEdit.apply();
+        }
     }
 
     public void assignId(Button btn, int id ){
