@@ -8,8 +8,7 @@ import androidx.preference.SwitchPreference;
 
 import android.os.Bundle;
 
-public class MySettingActivity extends AppCompatActivity implements PreferenceFragmentCompat.OnPreferenceStartFragmentCallback {
-
+public class MySettingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,10 +17,5 @@ public class MySettingActivity extends AppCompatActivity implements PreferenceFr
         getSupportFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new SettingsFragment())
                 .commit();
-    }
-
-    @Override
-    public boolean onPreferenceStartFragment(@NonNull PreferenceFragmentCompat caller, @NonNull Preference pref) {
-        return false;
     }
 }

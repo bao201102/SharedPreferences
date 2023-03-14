@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         save = sharedPreferences.getBoolean("switch",false);
         if (save == true){
+            mCount = Integer.parseInt(textView.getText().toString());
+            mCurrentColor = ((ColorDrawable) textView.getBackground()).getColor();
             SharedPreferences.Editor myEdit = mPreferences.edit();
             myEdit.putInt("count", mCount);
             myEdit.putInt("color",mCurrentColor);
@@ -80,28 +82,23 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.btn_count:
                     int i = Integer.parseInt(textView.getText().toString());
                     int num = i + 1;
-                    mCount = num;
                     textView.setText(String.valueOf(num));
                     break;
                 case R.id.btn_black:
                     textView.setBackgroundColor(Color.BLACK);
                     textView.setTextColor(getColor(R.color.white));
-                    mCurrentColor = Color.BLACK;
                     break;
                 case R.id.btn_red:
                     textView.setBackgroundColor(Color.RED);
                     textView.setTextColor(getColor(R.color.white));
-                    mCurrentColor = Color.RED;
                     break;
                 case R.id.btn_green:
                     textView.setBackgroundColor(Color.GREEN);
                     textView.setTextColor(getColor(R.color.white));
-                    mCurrentColor = Color.GREEN;
                     break;
                 case R.id.btn_blue:
                     textView.setBackgroundColor(Color.BLUE);
                     textView.setTextColor(getColor(R.color.white));
-                    mCurrentColor = Color.BLUE;
                     break;
             }
         }
